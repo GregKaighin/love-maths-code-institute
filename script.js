@@ -31,6 +31,9 @@ function runGame(gameType) {
 
     if (gameType === "addition") {
         displayAdditionQuestion(num1, num2);
+    }
+    else if (gameType === "multiply") {
+        displayMultiplyQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type ${gameType}, aborting`;
@@ -48,9 +51,11 @@ function checkAnswer() {
 
     if (isCorrect) {
         alert("Hey! You got it right :D");
+        incrementScore();
     }
     else {
         alert(`Awww...you answered ${userAnswer}, the correct answer was ${calculatedAnswer[0]} :(`);
+        incrementWrongAnswer();
     }
 
     runGame(calculatedAnswer[1]);
@@ -68,6 +73,9 @@ function calculateRightAnswer() {
     if (operator === "+") { // This is the addition game
         return [operand1 + operand2, "addition"]; // return an array containing the correct answer and game type
     }
+    else if (operator === "x") { // This is the subtraction game
+        return [operand1 * operand2, "multiply"]; // return an array containing the correct answer and game type
+    }
     else {
         alert(`Unimplemented operator: ${operator}`);
         throw `Unimplemented operator ${operator}, aborting`;
@@ -75,11 +83,17 @@ function calculateRightAnswer() {
 }
 
 function incrementScore() {
+    // Gets the current score from the DOM and increments it
 
+    let oldScore = parseInt(document.getElementById("score").innerText);
+    document.getElementById("score").innerText = ++oldScore;
 }
 
 function incrementWrongAnswer() {
+    // Gets the current tally of incorrect answers from the DOM and increments it
 
+    let oldScore = parseInt(document.getElementById("incorrect").innerText);
+    document.getElementById("incorrect").innerText = ++oldScore;
 }
 
 // Displays the questions.
@@ -94,6 +108,8 @@ function displaySubtractQuestion() {
 
 }
 
-function displayMultiplyQuestion() {
-
+function displayMultiplyQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "x";
 }
